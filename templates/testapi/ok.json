@@ -1,0 +1,5 @@
+{
+    "hello": "world",
+    "everything": "is fine",
+    "reference": "{{vars.reference}}"
+}

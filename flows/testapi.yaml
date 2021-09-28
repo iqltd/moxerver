@@ -1,0 +1,15 @@
+---
+api: testapi
+flows:
+  - route: POST /operation
+    vars:
+      reference: request.ref
+      meaning: request.meaning.life.everything
+      prev_meaning: history.meaning
+    rules:
+      - filter:
+          vars.meaning: 42
+        result: ok.json
+      - result: bad_meaning.json
+    save:
+      meaning: vars.meaning
