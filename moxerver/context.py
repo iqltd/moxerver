@@ -47,7 +47,10 @@ def split_path(path_as_string):
 def extract_static_value(path, data):
     while path:
         next_part, path = split_path(path[0])
-        data = data.get(next_part, {})
+        if isinstance(data, dict):
+            data = data.get(next_part, {})
+        else:
+            return ""
     return data if data else ""
 
 
