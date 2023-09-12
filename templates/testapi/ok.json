@@ -1,5 +1,7 @@
 {
     "hello": "world",
     "everything": "is fine",
-    "reference": "{{vars.reference}}"
+    "reference": "{{vars.reference}}",
+    "meaning": "{{vars.meaning}}",
+    "old_meaning": "{{vars.prev_meaning}}"
 }
