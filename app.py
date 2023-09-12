@@ -1,7 +1,7 @@
 from flask import Flask, request, g, render_template, abort
 from moxerver.handler import get_handler
 from moxerver.context import Context
-from moxerver.db import get_db
+from moxerver.db import get_db, ensure_path
 import logging
 
 app = Flask(__name__)
@@ -9,7 +9,7 @@ app = Flask(__name__)
 logging.basicConfig(level=logging.DEBUG)
 
 
-@app.route("/mox/<api>/<path:subpath>", methods=['POST', 'GET'])
+@app.route("/mox/<api>/<path:subpath>", methods=["POST", "GET"])
 def service(api, subpath):
     method = request.method
     logging.info(f"Received request to {method} {api}/{subpath}")
@@ -32,18 +32,20 @@ def interpret_result(api, result):
 
 @app.teardown_appcontext
 def close_connection(exception):
-    db = getattr(g, '_database', None)
+    db = getattr(g, "_database", None)
     if db is not None:
         db.close()
 
 
+@app.cli.command("init_db")
 def init_db():
     with app.app_context():
+        ensure_path()
         db = get_db()
-        with app.open_resource('schema.sql', mode='r') as f:
+        with app.open_resource("schema.sql", mode="r") as f:
             db.cursor().executescript(f.read())
         db.commit()
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host="0.0.0.0", port=5000)

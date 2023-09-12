@@ -1,5 +1,5 @@
 # Set base image (host OS)
-FROM python:3.9-alpine
+FROM python:3.11-slim-bookworm
 
 ENV APP_HOME_DIR=/opt/moxerver
 
@@ -18,6 +18,9 @@ RUN pip install -r requirements.txt
 
 # Copy the content of the local src directory to the working directory
 COPY . $APP_HOME_DIR
+
+# Setup db tables
+CMD ["flask", "init_db"]
 
 # Specify the command to run on container start
 CMD [ "python", "./app.py" ]
