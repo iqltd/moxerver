@@ -1,7 +1,9 @@
-from flask import Flask, request, g, render_template, abort
+from flask import Flask, request, g, render_template, abort, Response
 from moxerver.handler import get_handler
 from moxerver.context import Context
+from moxerver.history import History
 from moxerver.db import get_db, ensure_path
+import json
 import logging
 
 app = Flask(__name__)
@@ -10,7 +12,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 @app.route("/mox/<api>/<path:subpath>", methods=["POST", "GET"])
-def service(api, subpath):
+def execute_mock(api, subpath):
     method = request.method
     logging.info(f"Received request to {method} {api}/{subpath}")
 
@@ -28,6 +30,13 @@ def interpret_result(api, result):
     if result.get_template():
         return "{}/{}".format(api, result.template), status_code
     abort(status_code)
+
+
+@app.route("/history/<api>/<reference>")
+def show_history(api, reference):
+    history = History(api, reference)
+    data = history.get_data()
+    return Response(json.dumps(data))
 
 
 @app.teardown_appcontext
