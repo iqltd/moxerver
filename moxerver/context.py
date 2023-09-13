@@ -3,7 +3,6 @@ from .history import get_history
 
 
 class Context(object):
-
     def __init__(self, api):
         self.api = api
         self.context = {}
@@ -19,7 +18,7 @@ class Context(object):
         return history
 
     def add_vars(self, var_specs):
-        for (name, path) in var_specs.items():
+        for name, path in var_specs.items():
             value = self.get(path)
             self.add_var(name, value)
 

@@ -19,7 +19,6 @@ def read_config(api):
 
 
 class Mock(object):
-
     def __init__(self, api, specs):
         self.api = api
         self.flows = [Flow(spec) for spec in specs.get("flows", [])]
@@ -35,15 +34,15 @@ class Mock(object):
         return flow.handle(context)
 
     def get_matching_flow(self, method, operation):
-        flow = next((flow for flow in self.flows
-                     if flow.is_match(method, operation)),
-                    self.default_flow)
+        flow = next(
+            (flow for flow in self.flows if flow.is_match(method, operation)),
+            self.default_flow,
+        )
         logging.debug(f"Flow: {flow.route}")
         return flow
 
 
 class Flow(object):
-
     def __init__(self, specs):
         self.route = specs.get("route")
         self.var_specs = specs.get("vars", {})
@@ -66,9 +65,4 @@ class Flow(object):
         return matching_rule.get_result()
 
     def get_matching_rule(self, context):
-        return next((rule
-                     for rule in self.rules
-                     if rule.is_match(context)),
-                    Rule({}))
-
-
+        return next((rule for rule in self.rules if rule.is_match(context)), Rule({}))
