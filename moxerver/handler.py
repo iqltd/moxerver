@@ -26,7 +26,7 @@ class Mock(object):
         self.default_flow = Flow(specs.get("default", {}))
 
     def handle_request(self, method, operation, context):
-        request_body = request.get_json()
+        request_body = request.get_json(force=True)
         if not request_body:
             request_body = request.form
         print(request_body)
