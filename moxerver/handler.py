@@ -11,8 +11,8 @@ def get_handler(api):
 
 
 def read_config(api):
-    config_file = "flows/{}.yaml".format(api)
-    with open(config_file) as f:
+    config_file = f"flows/{api}/{api}.yaml"
+    with open(config_file, encoding="utf-8") as f:
         config = yaml.safe_load(f)
     logging.debug(f"Api configuration: {config}")
     return config

@@ -6,7 +6,7 @@ from moxerver.db import get_db, ensure_path
 import json
 import logging
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="flows")
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -28,7 +28,7 @@ def execute_mock(api, subpath):
 def interpret_result(api, result):
     status_code = result.get_status_code()
     if result.get_template():
-        return "{}/{}".format(api, result.template), status_code
+        return f"{api}/{result.template}", status_code
     abort(status_code)
 
 

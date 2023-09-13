@@ -5,7 +5,7 @@ A naive way to mock REST APIs based on rules defined in yaml files.
 It can:
 
 - extract values from the request
-- store values linked to a request in the db 
+- store values linked to a request in the db
 - return a certain response based on the values above
 - use the values above in the response body 
 
@@ -36,14 +36,13 @@ Please note that you can also run it in a container by using the provided Contai
 
 ## Sample app
 
-The file `flows/testapi` together with the files under `templates/testapi` represent an example (albeit a silly one) of using the application.
+The files under `flows/testapi` represent an example (albeit a silly one) of using the application.
 
 ### Flow configuration
 
 The name of the application (which will be part of the url) is defined at the beginning of the file
 
 ``` yaml
----
 api: testapi
 ```
 
@@ -78,7 +77,7 @@ For instance, the above yaml file defines that when a `POST` request is made to 
 
 ### Response templates
 
-The response templates need to be placed under the `templates/<app_name>` directory. The response templates are jinja templates which can contain any of the variables defined above. For instance:
+The response templates need to be placed in the same directory as the yaml file. The response templates are jinja templates which can contain any of the variables defined above. For instance:
 
 ``` json
 {
