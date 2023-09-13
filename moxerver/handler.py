@@ -57,9 +57,10 @@ class Flow(object):
     def handle(self, context):
         reference = context.get(self.var_specs.get("reference", ""))
         history = context.setup_history(reference)
-        context.setup_vars(self.var_specs)
+        context.add_vars(self.var_specs)
 
         matching_rule = self.get_matching_rule(context)
+        context.add_vars(matching_rule.vars)
         action = self.action.merge(matching_rule.action)
         action.perform(history, context)
         return matching_rule.get_result()

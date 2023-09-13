@@ -8,6 +8,7 @@ class Rule(object):
     def __init__(self, specs):
         self.filter_specs = specs.get("filter", {})
         self.action = SaveAction(specs.get("save", {}))
+        self.vars = specs.get("vars", {})
         self.result = Result(specs.get("result", {}))
 
     def is_match(self, context):

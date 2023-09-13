@@ -18,7 +18,7 @@ class Context(object):
         logging.debug(f"History for api {self.api}, reference {reference}: {history}")
         return history
 
-    def setup_vars(self, var_specs):
+    def add_vars(self, var_specs):
         for (name, path) in var_specs.items():
             value = self.get(path)
             self.add_var(name, value)
@@ -55,4 +55,4 @@ def extract_static_value(path, data):
 
 
 def extract_literal(literal, _):
-    return literal
+    return literal[0]
